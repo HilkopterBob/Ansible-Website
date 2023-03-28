@@ -3,7 +3,7 @@ from typing import Dict
 from fastapi import Request
 from fastapi.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
-from .conf import primary_color
+
 
 
 
@@ -18,7 +18,7 @@ def is_authenticated(request: Request) -> bool:
 
 @ui.page('/')
 def landng_page(request: Request) -> None:
-    ui.colors(primary=primary_color)
+    ui.colors(primary="#BB86FC")
     if not is_authenticated(request):
         return RedirectResponse('/login')
     session = session_info[request.session['id']]
