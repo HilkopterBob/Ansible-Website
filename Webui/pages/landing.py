@@ -27,7 +27,11 @@ def landng_page(request: Request) -> None:
     # ================ Landing Page ================ #
     with ui.header().style("background-color: #1d1d1d").classes("items-center justify-between"):
                 ui.image("http://127.0.0.1:3000/buettner-nice-removebg-preview.png").style("width:150px; height:50px")
-                ui.label("Ansible Automation Hub").style("color:linear-gradient(to right,red,yellow)").classes("text-h6")
+                ui.label('Ansible Automation Hub').style('''
+                                                background: linear-gradient(to right, #BB86FC, #03DAC5);
+                                                -webkit-background-clip: text;
+                                                -webkit-text-fill-color: transparent;
+                                                ''').classes("text-h5")
                 with ui.row():
                     ui.button(on_click=lambda: right_drawer.toggle()).props("icon=menu outline")
 
@@ -43,4 +47,8 @@ def landng_page(request: Request) -> None:
                 ui.label(" ")
                 ui.button("settings", on_click=lambda: ui.open("/settings")).classes("w-full").props("align=left outline icon=logout")
                 ui.button("log out", on_click=lambda: ui.open("/logout")).classes("w-full").props("align=left outline icon=logout")
-    ui.label("hi")
+    with ui.card().style("background-color:#BB86FC").classes("") as card:
+        with ui.row() as row:
+            with ui.column() as col:
+                ui.label("Automate IT!").style("color:#03DAC5").classes("text-h6")
+
