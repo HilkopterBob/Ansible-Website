@@ -1,16 +1,14 @@
 from nicegui import ui
-
-from nicegui import ui, app
 import uuid
 from .landing import is_authenticated, session_info, users
-
 from fastapi import Request
 from fastapi.responses import RedirectResponse
-from starlette.middleware.sessions import SessionMiddleware
 
+from .conf import primary_color
 
 @ui.page('/login')
 def login_page(request: Request) -> None:
+    ui.colors(primary=primary_color)
     def try_login() -> None:  # local function to avoid passing username and password as arguments
         if (username.value, password.value) in users:
             session_info[request.session['id']] = {'username': username.value, 'authenticated': True}
