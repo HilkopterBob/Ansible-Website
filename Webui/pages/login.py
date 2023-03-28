@@ -17,6 +17,10 @@ def login_page(request: Request) -> None:
             ui.open('/')
         else:
             ui.notify('Wrong username or password', color='negative')
+            username.value = ""
+            password.value = ""
+
+
 
     if is_authenticated(request):
         return RedirectResponse('/')
