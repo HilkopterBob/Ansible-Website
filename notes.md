@@ -27,3 +27,4 @@
 # shuld be done:
 
  - user settings implementieren
+ - add-hoc commands implementieren (mit unseren daten playbooks sofort ausführen, super ober mega schnell, vereinfachtes gui)

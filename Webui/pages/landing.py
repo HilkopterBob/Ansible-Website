@@ -22,11 +22,6 @@ def landng_page(request: Request) -> None:
     ui.colors(primary="#BB86FC")
     if not is_authenticated(request):
         return RedirectResponse('/login')
-    print(request.__dict__)
-    
-    
-    # if request.user == "admin":
-    #     print("yay")
     session = session_info[request.session['id']]
 
 
@@ -57,13 +52,52 @@ def landng_page(request: Request) -> None:
     # ~~~~~ Main Page Preset Builder Card ~~~~~ #
 
     with ui.card().classes(" w-full") as card: #absolute-center w-full h-full
-        with ui.tabs() as tabs:
+        with ui.tabs().props("indicator-color=transparent") as tabs:
             ui.tab('Presets', icon='description')
             ui.tab('Builder', icon='edit_document')
         
         with ui.tab_panels(tabs, value='Home').classes("w-full"):
             with ui.tab_panel('Presets'):
-                ui.label('This is the first tab')
+                # inside the Presets tab
+                with ui.column().classes("w-full") as col:
+                    with ui.row().classes("w-full items-center justify-between") as row:
+                        #creates line shaped container
+                        with ui.row().classes("w-full items-center justify-between"):
+                            with ui.expansion("").classes("w-full items-center justify-between") as dropdown:
+                                dropdown.classes("w-full items-center justify-betwee")
+                                with dropdown.add_slot("header"):
+                                    # alles in eine row packen und die dann ober mega groß machen
+                                    ui.label("playbok name")
+                                    ui.label("hosts")
+                                    with ui.row():
+                                        ui.button("").props("icon=play_arrow")
+                                        ui.button("").props("icon=edit")
+                                with ui.card().classes("w-full"):
+                                    ui.label("inside the expansion")
+                    with ui.expansion("line shaped container inside draft", icon="forum").classes("w-full"):
+                        with ui.row().classes("w-full items-center justify-between") as row:
+                            with ui.column():
+                                with ui.row():
+                                    ui.label("Name:")
+                                    ui.label("%%name%%")
+                                with ui.row():
+                                    ui.label("Descr:")
+                                    ui.label("%%descr%%")
+                            with ui.column():
+                                with ui.row():
+                                    ui.label("Parameter Editor:")
+                                    ui.label(" ")
+                                with ui.row():
+                                    ui.label("param1:")         #zb. backuppatch
+                                    ui.input()
+                            with ui.column():
+                                ui.label("hi")
+                            with ui.column():
+                                #spacer ↑↓
+                                ui.label("")
+            
+            
+            
             with ui.tab_panel('Builder'):
                 ui.label('This is the second tab')
 
@@ -71,12 +105,12 @@ def landng_page(request: Request) -> None:
     # ~~~~~ Main Page running history Card  ~~~~~ #
 
     with ui.card().classes(" w-full") as card: #absolute-center w-full h-full
-        with ui.tabs() as tabs:
-            ui.tab('Home', icon='home')
-            ui.tab('About', icon='info')
+        with ui.tabs().props("indicator-color=transparent") as tabs:
+            ui.tab('Jobs', icon='developer_board')
+            ui.tab('History', icon='verified')
         
         with ui.tab_panels(tabs, value='Home').classes("w-full"):
-            with ui.tab_panel('Home'):
+            with ui.tab_panel('Jobs'):
                 ui.label('This is the first tab')
-            with ui.tab_panel('About'):
+            with ui.tab_panel('History'):
                 ui.label('This is the second tab')
