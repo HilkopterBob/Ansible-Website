@@ -24,4 +24,4 @@ def login_page(request: Request) -> None:
     with ui.card().classes('absolute-center'):
         username = ui.input('Username').on('keydown.enter', try_login)
         password = ui.input('Password').props('type=password').on('keydown.enter', try_login)
-        ui.button('Log in', on_click=try_login)
+        ui.button('Log in', on_click=try_login).props("outline")
