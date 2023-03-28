@@ -3,7 +3,8 @@ from typing import Dict
 from fastapi import Request
 from fastapi.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
-
+import itertools
+from .components import listitem
 
 
 
@@ -60,37 +61,27 @@ def landng_page(request: Request) -> None:
             with ui.tab_panel('Presets'):
                 # inside the Presets tab
                 with ui.column().classes("w-full") as col:
-                    with ui.row().classes("w-full items-center justify-between") as row:
-                        #creates line shaped container
-                        with ui.row().classes("w-full items-center justify-between"):
-                            with ui.expansion("").classes("w-full items-center justify-between") as dropdown:
-                                dropdown.classes("w-full items-center justify-betwee")
-                                with dropdown.add_slot("header"):
-                                    # alles in eine row packen und die dann ober mega groß machen
-                                    ui.label("playbok name")
-                                    ui.label("hosts")
-                                    with ui.row():
-                                        ui.button("").props("icon=play_arrow")
-                                        ui.button("").props("icon=edit")
-                                with ui.card().classes("w-full"):
-                                    ui.label("inside the expansion")
+                #für jede zeile im log wird ein listitem generiert
+                #falls mehr als 50 zeilen generiert wurden, wird unten die möglichkeit gegeben
+                #eine seite weiter zu blättern und die nächsten 50 items zu sehen
+                    with col:
+                        for _ in itertools.repeat(None, 5): listitem()
                     with ui.expansion("line shaped container inside draft", icon="forum").classes("w-full"):
                         with ui.row().classes("w-full items-center justify-between") as row:
-                            with ui.column():
-                                with ui.row():
+                            with ui.column().classes("items-center justify-between"):
+                                with ui.row().classes("items-center justify-between"):
                                     ui.label("Name:")
                                     ui.label("%%name%%")
-                                with ui.row():
+                                with ui.row().classes("items-center justify-between"):
                                     ui.label("Descr:")
                                     ui.label("%%descr%%")
-                            with ui.column():
-                                with ui.row():
+                            with ui.column().classes("items-center justify-between"):
+                                with ui.row().classes("items-center justify-between"):
                                     ui.label("Parameter Editor:")
-                                    ui.label(" ")
-                                with ui.row():
+                                with ui.row().classes("items-center justify-between"):
                                     ui.label("param1:")         #zb. backuppatch
                                     ui.input()
-                            with ui.column():
+                            with ui.column().classes("items-center justify-between"):
                                 ui.label("hi")
                             with ui.column():
                                 #spacer ↑↓
