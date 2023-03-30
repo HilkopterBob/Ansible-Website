@@ -10,7 +10,7 @@ from .landing import is_authenticated, session_info
 
 @ui.page('/logout')
 def logout(request: Request) -> None:
-    ui.colors(primary="#BB86FC")
+    ui.colors(primary="#BB86FC", secondary="#03DAC5", accent="#03DAC5", warning="#03DAC5", info="#BB68FC")
     if is_authenticated(request):
         session_info.pop(request.session['id'])
         request.session['id'] = None

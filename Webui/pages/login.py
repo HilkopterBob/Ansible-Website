@@ -10,7 +10,7 @@ from .landing import is_authenticated, session_info, users, admins
 
 @ui.page('/login')
 def login_page(request: Request) -> None:
-    ui.colors(primary="#BB86FC")
+    ui.colors(primary="#BB86FC", secondary="#03DAC5", accent="#03DAC5", warning="#03DAC5", info="#BB68FC")
     def try_login() -> None:  # local function to avoid passing username and password as arguments
         if (username.value, password.value) in admins:
             session_info[request.session['id']] = {'username': username.value, 'authenticated': True}

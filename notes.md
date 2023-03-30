@@ -30,3 +30,4 @@
  - add-hoc commands/bereich implementieren (mit unseren daten playbooks sofort ausführen, super ober mega schnell, vereinfachtes gui)
  - listitem innenleben ausgestalten (in der history muss unbedingt ein bericht ausgegeben werden)
  - schnittstellenanforderung ausarbeiten für listitem plays
+ - formular für ticketsystem einrichten (usability/feadback)
