@@ -31,3 +31,5 @@
  - listitem innenleben ausgestalten (in der history muss unbedingt ein bericht ausgegeben werden)
  - schnittstellenanforderung ausarbeiten für listitem plays
  - formular für ticketsystem einrichten (usability/feadback)
+ - Rubriken nach firmen
+ - optionaler whitemode (mit Rot und weiß) irgh

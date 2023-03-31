@@ -1,6 +1,6 @@
 from nicegui import ui
 from functools import partial
-from .searchbars import sayt, get_checked_results, sayt_copy
+from .searchbars import sayt, get_checked_results, sayt_copy, get_checked_results_copy, clear_checked_results, clear_checked_results_copy
 
 
 
@@ -11,6 +11,21 @@ def hosts_changed_values(changed_component, second_component, third_component):
     if changed_component.value == False and second_component.value == False and third_component.value == False:
         ui.notify("must select host-type", type="info")
 
+def place_submitted_search_values(container):
+    search_values = get_checked_results()
+    with container:
+        for item in search_values:
+            with ui.row().classes("w-full") as row:
+                ui.label(text=item)
+                ui.button("", on_click=lambda e, row=row: container.remove(row)  ).props("icon=delete")
+
+def place_submitted_search_values_copy(container):
+    search_values = get_checked_results_copy()
+    with container:
+        for item in search_values:
+            with ui.row().classes("w-full") as row:
+                ui.label(text=item)
+                ui.button("", on_click=lambda e, row=row: container.remove(row)).props("icon=delete")
 
 def listitem():
     #creates line shaped container
@@ -52,20 +67,18 @@ def listitem():
                                             host_all = ui.checkbox("all", value=True).on("click", lambda: hosts_changed_values(host_all, host_groups, host_individual))
                                             host_groups = ui.checkbox("groups", value=False).on("click", lambda: hosts_changed_values(host_groups, host_all, host_individual))      
                                             host_individual = ui.checkbox("individual IP", value=False).on("click", lambda: hosts_changed_values(host_individual, host_all, host_groups))
-                                        with ui.column().classes("w-full items-center").bind_visibility_from(host_groups, "value"):
+                                        with ui.column().classes("w-full self-center").bind_visibility_from(host_groups, "value"):
                                             #searchbar = sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
-                                            checked_values = sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
-                                            print(checked_values)
-                                            # results[0]
-                                            # results[1]
-                                            # searchbar.on_value_change(print(f"changed!! {searchbar.value}"))
-                                            # # with ui.column().classes("w-full items-left"):
-                                            # #     checked_results = get_checked_results()
-                                            # #     for item in checked_results:
-                                            # #         ui.label(item)
-                                            # print(searchbar.default_slot.children)
-                                        with ui.column().classes("w-full items-center").bind_visibility_from(host_individual, "value"):
-                                            searchbar = sayt_copy(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
+                                            with ui.row().classes("w-full asolute-center self-center"):
+                                                ui.button("Submit", on_click=lambda: [place_submitted_search_values(col1), clear_checked_results()]).classes("center self-center")
+                                                sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
+                                            col1 = ui.column().classes("w-full items-center")
+                                                
+                                        with ui.column().classes("w-full self-center").bind_visibility_from(host_individual, "value"):
+                                            with ui.row().classes("w-full asolute-center self-center"):
+                                                ui.button("Submit", on_click=lambda: [place_submitted_search_values_copy(col2), clear_checked_results_copy()]).classes("center self-center")
+                                                sayt_copy(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
+                                            col2 = ui.column().classes("w-full items-center")
     return Listitem
 
 
