@@ -24,7 +24,7 @@ async def search(e: events.ValueChangeEventArguments) -> None:
     search_field.classes('mt-2', remove='mt-24') 
     results_container.clear()
     if e.value == "":
-        pass
+        clear_checked_results()
     running_query = asyncio.create_task(search_in_csv(e.value))
     response = await running_query
     for index, item in enumerate(response):
