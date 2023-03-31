@@ -42,6 +42,7 @@ async def search(e: events.ValueChangeEventArguments) -> None:
 # fr fr falls das jemand ließt, dass was da unten los ist ist mir echt peinlich, 
 # aber hauptsache ich hab nachher search as you type auf der page
 def sayt (file):
+    print()
     global checked_results
     global search_field
     global results
