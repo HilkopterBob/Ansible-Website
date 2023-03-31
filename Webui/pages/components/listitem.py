@@ -70,13 +70,13 @@ def listitem():
                                         with ui.column().classes("w-full self-center").bind_visibility_from(host_groups, "value"):
                                             #searchbar = sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                             with ui.row().classes("w-full asolute-center self-center"):
-                                                ui.button("Submit", on_click=lambda: [place_submitted_search_values(col1), clear_checked_results()]).classes("center self-center")
+                                                ui.button("Submit", on_click=lambda: [place_submitted_search_values(col1), clear_checked_results(), ui.notify("submitted", type="info")]).classes("center self-center")
                                                 sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                             col1 = ui.column().classes("w-full items-center")
                                                 
                                         with ui.column().classes("w-full self-center").bind_visibility_from(host_individual, "value"):
                                             with ui.row().classes("w-full asolute-center self-center"):
-                                                ui.button("Submit", on_click=lambda: [place_submitted_search_values_copy(col2), clear_checked_results_copy()]).classes("center self-center")
+                                                ui.button("Submit", on_click=lambda: [place_submitted_search_values_copy(col2), clear_checked_results_copy(), ui.notify("submitted", type="info")]).classes("center self-center")
                                                 sayt_copy(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                             col2 = ui.column().classes("w-full items-center")
     return Listitem
