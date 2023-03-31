@@ -4,7 +4,7 @@ from fastapi import Request
 from fastapi.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
 import itertools
-from .components import listitem
+from .components import listitem, jobitem
 from time import sleep
 
 
@@ -83,6 +83,10 @@ def landing_page(request: Request) -> None:
         
         with ui.tab_panels(tabs, value='Home').classes("w-full"):
             with ui.tab_panel('Jobs'):
-                ui.label('This is the first tab')
-            with ui.tab_panel('History'):
-                ui.label('This is the second tab')
+                with ui.column().classes("w-full") as col:
+                    with col:
+                        for _ in itertools.repeat(None, 5): jobitem()
+            with ui.tab_panel('History').classes("h-100"):
+                with ui.column().classes("w-full h-100"):
+                    log = ui.log(max_lines=100).classes("w-full h-96")
+                    ui.button("push", on_click=lambda: log.push("hello"))
