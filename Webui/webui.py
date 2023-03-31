@@ -11,4 +11,4 @@ from pages import login_page, landing_page, logout, admin_panel
 
 ui.colors(primary="#BB86FC", secondary="#03DAC5", accent="#03DAC5", warning="#03DAC5", info="#BB68FC")
 
-ui.run(port=80, dark=True, title="Ansible Automation Hub")
+ui.run(port=80, dark=True, title="Ansible Automation Hub", favicon=r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\static\favicon-32x32.png")
