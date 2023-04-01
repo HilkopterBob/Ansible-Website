@@ -33,3 +33,11 @@
  - formular für ticketsystem einrichten (usability/feadback)
  - Rubriken nach firmen
  - optionaler whitemode (mit Rot und weiß) irgh
+ - man kann auf admin panel wechseln als normaler user
+ - login screen aufhübschen mit zb. logo und Ansible automation hub uso
+ - formatierung von suchergebnissen 
+
+
+## new branch modularization
+
+ - alles auf modularisierung und best practices umbauen
