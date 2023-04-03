@@ -9,6 +9,12 @@ async def callfunc_place_submitted():
     await clear_checked_results()
     ui.notify("submitted", type="info")
 
+async def callfunc_place_submitted():
+    await place_submitted_search_values(searchresults_column_hostindividual)
+    await clear_checked_results()
+    ui.notify("submitted", type="info")
+
+
 def hosts_changed_values(changed_component, second_component, third_component):
     if changed_component.value != False:
         second_component.set_value(not changed_component.value)
@@ -82,7 +88,7 @@ async def listitem():
                                                 
                                         with ui.column().classes("w-full self-center").bind_visibility_from(host_individual, "value"):
                                             with ui.row().classes("w-full asolute-center self-center"):
-                                                ui.button("Submit", on_click=lambda: [place_submitted_search_values_copy(col2), clear_checked_results_copy(), ui.notify("submitted", type="info")]).classes("center self-center")
+                                                ui.button("Submit", on_click=callfunc_place_submitted).classes("center self-center")
                                                 await sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                                 global searchresults_column_hostindividual
                                             searchresults_column_hostindividual = ui.column().classes("w-full items-center")
