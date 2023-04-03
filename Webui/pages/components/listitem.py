@@ -93,7 +93,7 @@ async def listitem():
                                                 if system() == "Windows":
                                                     await sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                                 else:
-                                                    await sayt(r"\home\nick\Ansible-Website\Webui\csv's\lookup.csv")
+                                                    await sayt(r"/home/nick/Ansible-Website/Webui/csv's/lookup.csv")
                                                 global searchresults_column_hostgroups
                                             searchresults_column_hostgroups = ui.column().classes("w-full items-center")
                                                 
@@ -103,7 +103,7 @@ async def listitem():
                                                 if system() == "Windows":
                                                     await sayt_copy(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                                 else:
-                                                    await sayt_copy(r"\home\nick\Ansible-Website\Webui\csv's\lookup.csv")
+                                                    await sayt_copy(r"/home/nick/Ansible-Website/Webui/csv's/lookup.csv")
                                                 global searchresults_column_hostindividual
                                             searchresults_column_hostindividual = ui.column().classes("w-full items-center")
     return Listitem
