@@ -4,33 +4,55 @@ from contextlib import contextmanager
 from starlette.middleware.sessions import SessionMiddleware
 from typing import Dict
 from fastapi.responses import RedirectResponse
+import asyncio
 
-app.add_middleware(SessionMiddleware, secret_key='some_random_string')
-session_info: Dict[str, Dict] = {}
-users = [('user', '')]
+global clicks
+clicks = 0
 
-@contextmanager
-def frame():
-    '''Custom page frame to share the same styling and behavior across all pages'''
-    ui.button("Frame button")
-    with ui.element("div").classes(" w-full"):
-        yield
+async def notify():
+    global clicks
+    ui.notify("clicked", type="positive")
+    clicks = clicks + 1
 
-async def is_authenticated(request: Request, session_info) -> bool:
-    return session_info.get(request.session.get('id'), {}).get('authenticated', False)
+
+with ui.dialog() as dialog, ui.card():
+    ui.label("Trag den namen ein, unter dem dein highscore angezeigt werden soll:")
+    name_field = ui.input()
+    ui.button("Enter", on_click=lambda: dialog.submit(name_field.value))
+
+
+async def save_scroe():
+    scores = open("scores.txt","a")
+    name = await dialog()
+    scores.writelines(f"name: {name} got {clicks} clicks!")
+    ui.open("/")
+
+async def start_timer():
+    timer = ui.circular_progress(max=15, min=0)
+    i = 15
+    clicker = ui.button("click", on_click=notify)
+    while i >= 0:
+        timer.set_value(i)
+        await asyncio.sleep(1)
+        i-=1
+    timer.classes("hidden")
+    clicker.classes("hidden")
+    ui.label(f"Du hast {clicks} clicks erreicht!")
+    save_button = ui.button("Um deinen highscore zu speicher, click mich", on_click=save_scroe)
+    ui.button("restart", on_click=lambda: ui.open("/"))
+
+
+
+
 
 @ui.page('/')
 async def index_page(request: Request) -> None:
-    with frame():
-        await content(request, session_info)
+    return await content(request)
 
-async def content(request: Request, session_info) -> None:
-    if not await is_authenticated(request, session_info):  
-        return RedirectResponse('/login')  
-    ui.button("Content")
+async def content(request: Request) -> None:
+    ui.button("start clicker", on_click=lambda: dialog.open())
 
-@ui.page('/login')
-async def index_page(request: Request) -> None:
-    ui.button("login")
+
+
 
 ui.run()
