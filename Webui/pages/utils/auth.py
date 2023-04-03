@@ -2,7 +2,7 @@ from fastapi import Request
 
 
 
-users = [('nick', ''), ('user2', 'pass2')]
+users = [('nick', ''), ('jonas','')]
 admins = [("admin", r"!t6S%cB2nyTY8nmd0w4t!v0fxLvKMPYFKR3LJf9kFMMC34h*Ch")]
 
 
