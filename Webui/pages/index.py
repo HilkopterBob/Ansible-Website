@@ -2,7 +2,7 @@ from nicegui import ui
 from fastapi import Request
 from fastapi.responses import RedirectResponse
 import itertools
-from .components import listitem, jobitem
+from .components import listitem, jobitem, builder_content
 
 from .utils import is_authenticated
 
@@ -38,7 +38,7 @@ async def content(request: Request, session_info) -> None:
                     with col:
                         for _ in itertools.repeat(None, 5): await listitem()
             with ui.tab_panel('Builder'):
-                ui.label('This is the second tab')
+                await builder_content.content()
 
     # ~~~~~ End: Main Page Preset Builder Card ~~~~~ #
 

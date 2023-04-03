@@ -19,34 +19,31 @@ async def search_in_csv(search_term):
 async def search(e: events.ValueChangeEventArguments) -> None:
     global running_query
     if running_query:
-        running_query.cancel() 
-    search_field.classes('mt-2', remove='mt-24') 
+        running_query.cancel()
     results_container.clear()
     if e.value == "":
-        clear_checked_results()
-    running_query = asyncio.create_task(search_in_csv(e.value))
+        await clear_checked_results()
+    running_query = search_in_csv(e.value)
     response = await running_query
     for index, item in enumerate(response):
         if item == "":
             response.pop(index)
     if response != []:
         with results_container:  
-            with ui.element("div").classes('w-full items-center self-center') as results_sec_container:
-                for item in response:  # iterate over the response data of the api
-                    with ui.row().classes('w-full items-center self-center') as Row:
-                        checkbox = ui.checkbox(text=item, on_change=check).classes('self-center')
+            for item in response:  # iterate over the response data of the api
+                with ui.row().classes('w-full items-center self-center') as row:
+                    checkbox = ui.checkbox(text=item, on_change=check).classes('self-center')
     running_query = None
 
 # create a search field which is initially focused and leaves space at the top
 # fr fr falls das jemand ließt, dass was da unten los ist ist mir echt peinlich, 
 # aber hauptsache ich hab nachher search as you type auf der page
 async def sayt (file):
-    print()
+    print("sayt called")
     global checked_results
     global search_field
     global results
     global results_container
-    global results_sec_container
     global file_path
     file_path = file
     search_field = ui.input(on_change=search) \
@@ -63,7 +60,8 @@ async def check(event: events.ValueChangeEventArguments):
     if event.sender.value == True:
         checked_results.append(event.sender.text)
     if event.sender.value == False:
-        checked_results.remove(event.sender.text)
+        if event.sender.text in checked_results:
+            checked_results.remove(event.sender.text)
 
 async def clear_checked_results():
     global checked_results
