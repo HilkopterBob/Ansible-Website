@@ -42,5 +42,5 @@ async def logout_page(request: Request) -> None:
 
 
 ui.run(port=80, dark=True, title="Ansible Automation Hub",\
-    favicon=r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\static\favicon-32x32.png",\
+    favicon=r"./static/favicon-32.32.png",\
 )
