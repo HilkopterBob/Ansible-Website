@@ -1,5 +1,4 @@
 from nicegui import ui
-from functools import partial
 from .searchbars import sayt, get_checked_results, sayt_copy, get_checked_results_copy, clear_checked_results, clear_checked_results_copy
 
 
@@ -9,9 +8,9 @@ async def callfunc_place_submitted():
     await clear_checked_results()
     ui.notify("submitted", type="info")
 
-async def callfunc_place_submitted():
-    await place_submitted_search_values(searchresults_column_hostindividual)
-    await clear_checked_results()
+async def callfunc_place_submitted_copy():
+    await place_submitted_search_values_copy(searchresults_column_hostindividual)
+    await clear_checked_results_copy()
     ui.notify("submitted", type="info")
 
 
@@ -29,6 +28,15 @@ async def place_submitted_search_values(container):
             with ui.row().classes("w-full") as row:
                 ui.label(text=item)
                 ui.button("", on_click=lambda e, row=row: container.remove(row)  ).props("icon=delete")
+
+async def place_submitted_search_values_copy(container):
+    search_values = get_checked_results_copy()
+    with container:
+        for item in search_values:
+            with ui.row().classes("w-full") as row:
+                ui.label(text=item)
+                ui.button("", on_click=lambda e, row=row: container.remove(row)  ).props("icon=delete")
+
 
 async def place_submitted_search_values_copy(container):
     search_values = get_checked_results_copy()
@@ -88,8 +96,8 @@ async def listitem():
                                                 
                                         with ui.column().classes("w-full self-center").bind_visibility_from(host_individual, "value"):
                                             with ui.row().classes("w-full asolute-center self-center"):
-                                                ui.button("Submit", on_click=callfunc_place_submitted).classes("center self-center")
-                                                await sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
+                                                ui.button("Submit", on_click=callfunc_place_submitted_copy).classes("center self-center")
+                                                await sayt_copy(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                                 global searchresults_column_hostindividual
                                             searchresults_column_hostindividual = ui.column().classes("w-full items-center")
     return Listitem

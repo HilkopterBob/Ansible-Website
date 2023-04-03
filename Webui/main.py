@@ -23,7 +23,7 @@ async def index_page(request: Request) -> None:
 
 @ui.page('/login')
 async def login_page(request: Request) -> None:
-    with theme.frame():
+    with theme.frame(header=False):
         await login.content(request, session_info)
 
 @ui.page('/admin-panel')
@@ -33,7 +33,7 @@ async def admin_page(request: Request) -> None:
 
 @ui.page('/logout')
 async def logout_page(request: Request) -> None:
-    with theme.frame():
+    with theme.frame(header=False):
         await logout.content(request, session_info)
 
 

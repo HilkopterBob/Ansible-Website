@@ -10,7 +10,7 @@ from .utils import is_authenticated
 
 @ui.page('/logout')
 async def content(request: Request, session_info) -> None:
-    if is_authenticated(request, session_info):
+    if await is_authenticated(request, session_info):
         session_info.pop(request.session['id'])
         request.session['id'] = None
         return RedirectResponse('/login')
