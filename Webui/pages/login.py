@@ -2,16 +2,14 @@ from nicegui import ui, app
 from typing import Dict
 from fastapi import Request
 from fastapi.responses import RedirectResponse
-from starlette.middleware.sessions import SessionMiddleware
 import uuid
-from .landing import is_authenticated, session_info, users, admins
 
 
+from .utils.auth import is_authenticated, users, admins
 
-@ui.page('/login')
-def login_page(request: Request) -> None:
-    ui.colors(primary="#BB86FC", secondary="#03DAC5", accent="#03DAC5", warning="#03DAC5", info="#BB68FC")
-    def try_login() -> None:  # local function to avoid passing username and password as arguments
+
+async def content(request: Request, session_info) -> None:
+    async def try_login() -> None:  # local function to avoid passing username and password as arguments
         if (username.value, password.value) in admins:
             session_info[request.session['id']] = {'username': username.value, 'authenticated': True}
             ui.open('/admin-panel')
@@ -23,10 +21,8 @@ def login_page(request: Request) -> None:
             username.value = ""
             password.value = ""
 
-
-
-    if is_authenticated(request):
-        return RedirectResponse('/')
+    if await is_authenticated(request, session_info):
+        return ui.open('/')
     request.session['id'] = str(uuid.uuid4())  # this stores a new session ID in the cookie of the client
     with ui.card().classes('absolute-center'):
         username = ui.input('Username').on('keydown.enter', try_login)

@@ -5,13 +5,12 @@ from fastapi.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
 
 
-from .landing import is_authenticated, session_info
+from .utils import is_authenticated
 
 
 @ui.page('/logout')
-def logout(request: Request) -> None:
-    ui.colors(primary="#BB86FC", secondary="#03DAC5", accent="#03DAC5", warning="#03DAC5", info="#BB68FC")
-    if is_authenticated(request):
+async def content(request: Request, session_info) -> None:
+    if is_authenticated(request, session_info):
         session_info.pop(request.session['id'])
         request.session['id'] = None
         return RedirectResponse('/login')

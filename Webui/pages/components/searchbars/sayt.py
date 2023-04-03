@@ -12,9 +12,8 @@ async def search_in_csv(search_term):
     with open(file_path, 'rt') as f:
         reader = csv.reader(f, delimiter=',')
         for _row in reader:
-            for field in _row:
-                if str(search_term) in str(field):
-                    response.append(str(_row))
+            if str(search_term) in str(_row):
+                response.append(str(_row))
     return response
 
 async def search(e: events.ValueChangeEventArguments) -> None:
@@ -41,7 +40,7 @@ async def search(e: events.ValueChangeEventArguments) -> None:
 # create a search field which is initially focused and leaves space at the top
 # fr fr falls das jemand ließt, dass was da unten los ist ist mir echt peinlich, 
 # aber hauptsache ich hab nachher search as you type auf der page
-def sayt (file):
+async def sayt (file):
     print()
     global checked_results
     global search_field
@@ -56,7 +55,8 @@ def sayt (file):
     results_container = ui.card().classes('w-full items-center').bind_visibility_from(search_field, "value")
     return checked_results
 
-def get_checked_results():
+async def get_checked_results():
+    print(checked_results)
     return checked_results
 
 async def check(event: events.ValueChangeEventArguments):
@@ -65,7 +65,7 @@ async def check(event: events.ValueChangeEventArguments):
     if event.sender.value == False:
         checked_results.remove(event.sender.text)
 
-def clear_checked_results():
+async def clear_checked_results():
     global checked_results
     checked_results = []
 
