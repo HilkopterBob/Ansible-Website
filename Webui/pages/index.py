@@ -17,8 +17,8 @@ from .utils import is_authenticated
 
 
 async def content(request: Request, session_info) -> None:
-    # if not await is_authenticated(request, session_info):  
-    #     return RedirectResponse('/login')    redirectresponse from async not possible as of 1.2.3 see #693
+    if not await is_authenticated(request, session_info):  
+        return RedirectResponse('/login')   
 
 
     # ~~~~~ Main Page Preset Builder Card ~~~~~ #
