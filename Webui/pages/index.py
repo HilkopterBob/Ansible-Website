@@ -36,7 +36,7 @@ async def content(request: Request, session_info) -> None:
                 #falls mehr als 50 zeilen generiert wurden, wird unten die möglichkeit gegeben
                 #eine seite weiter zu blättern und die nächsten 50 items zu sehen
                     with col:
-                        for _ in itertools.repeat(None, 5): listitem()
+                        for _ in itertools.repeat(None, 5): await listitem()
             with ui.tab_panel('Builder'):
                 ui.label('This is the second tab')
 
@@ -55,7 +55,7 @@ async def content(request: Request, session_info) -> None:
             with ui.tab_panel('Jobs'):
                 with ui.column().classes("w-full") as col:
                     with col:
-                        for _ in itertools.repeat(None, 5): jobitem()
+                        for _ in itertools.repeat(None, 5): await jobitem()
             with ui.tab_panel('History').classes("h-100"):
                 with ui.column().classes("w-full h-100"):
                     log = ui.log(max_lines=100).classes("w-full h-96")

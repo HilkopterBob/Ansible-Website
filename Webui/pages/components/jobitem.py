@@ -1,6 +1,6 @@
 from nicegui import ui
 
-def jobitem():
+async def jobitem():
     #creates line shaped container
     with ui.expansion("").classes("w-full").props("expand-icon-toggle popup") as Jobitem:
         with Jobitem.add_slot("header"):

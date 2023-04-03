@@ -1,2 +1,0 @@
-primary: #BB86FC
-secondary: #03DAC5

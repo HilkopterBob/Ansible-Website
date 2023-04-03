@@ -4,6 +4,11 @@ from .searchbars import sayt, get_checked_results, sayt_copy, get_checked_result
 
 
 
+async def callfunc_place_submitted():
+    await place_submitted_search_values(searchresults_column_hostgroups)
+    await clear_checked_results()
+    ui.notify("submitted", type="info")
+
 def hosts_changed_values(changed_component, second_component, third_component):
     if changed_component.value != False:
         second_component.set_value(not changed_component.value)
@@ -11,15 +16,15 @@ def hosts_changed_values(changed_component, second_component, third_component):
     if changed_component.value == False and second_component.value == False and third_component.value == False:
         ui.notify("must select host-type", type="info")
 
-def place_submitted_search_values(container):
-    search_values = get_checked_results()
+async def place_submitted_search_values(container):
+    search_values = await get_checked_results()
     with container:
         for item in search_values:
             with ui.row().classes("w-full") as row:
                 ui.label(text=item)
                 ui.button("", on_click=lambda e, row=row: container.remove(row)  ).props("icon=delete")
 
-def place_submitted_search_values_copy(container):
+async def place_submitted_search_values_copy(container):
     search_values = get_checked_results_copy()
     with container:
         for item in search_values:
@@ -27,7 +32,7 @@ def place_submitted_search_values_copy(container):
                 ui.label(text=item)
                 ui.button("", on_click=lambda e, row=row: container.remove(row)).props("icon=delete")
 
-def listitem():
+async def listitem():
     #creates line shaped container
     with ui.expansion("").classes("w-full").props("expand-icon-toggle popup") as Listitem:
         with Listitem.add_slot("header"):
@@ -70,15 +75,17 @@ def listitem():
                                         with ui.column().classes("w-full self-center").bind_visibility_from(host_groups, "value"):
                                             #searchbar = sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                             with ui.row().classes("w-full asolute-center self-center"):
-                                                ui.button("Submit", on_click=lambda: [place_submitted_search_values(col1), clear_checked_results(), ui.notify("submitted", type="info")]).classes("center self-center")
-                                                sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
-                                            col1 = ui.column().classes("w-full items-center")
+                                                ui.button("Submit", on_click= callfunc_place_submitted).classes("self-center")
+                                                await sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
+                                                global searchresults_column_hostgroups
+                                            searchresults_column_hostgroups = ui.column().classes("w-full items-center")
                                                 
                                         with ui.column().classes("w-full self-center").bind_visibility_from(host_individual, "value"):
                                             with ui.row().classes("w-full asolute-center self-center"):
                                                 ui.button("Submit", on_click=lambda: [place_submitted_search_values_copy(col2), clear_checked_results_copy(), ui.notify("submitted", type="info")]).classes("center self-center")
-                                                sayt_copy(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
-                                            col2 = ui.column().classes("w-full items-center")
+                                                await sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
+                                                global searchresults_column_hostindividual
+                                            searchresults_column_hostindividual = ui.column().classes("w-full items-center")
     return Listitem
 
 
