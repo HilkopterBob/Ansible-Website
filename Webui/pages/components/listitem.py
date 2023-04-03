@@ -1,6 +1,6 @@
 from nicegui import ui
 from .searchbars import sayt, get_checked_results, sayt_copy, get_checked_results_copy, clear_checked_results, clear_checked_results_copy
-
+from platform import system
 
 
 async def callfunc_place_submitted():
@@ -90,14 +90,20 @@ async def listitem():
                                             #searchbar = sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                             with ui.row().classes("w-full asolute-center self-center"):
                                                 ui.button("Submit", on_click= callfunc_place_submitted).classes("self-center")
-                                                await sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
+                                                if system() == "Windows":
+                                                    await sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
+                                                else:
+                                                    await sayt(r"\home\ncik\Ansible-Website\Webui\csv's\lookup.csv")
                                                 global searchresults_column_hostgroups
                                             searchresults_column_hostgroups = ui.column().classes("w-full items-center")
                                                 
                                         with ui.column().classes("w-full self-center").bind_visibility_from(host_individual, "value"):
                                             with ui.row().classes("w-full asolute-center self-center"):
                                                 ui.button("Submit", on_click=callfunc_place_submitted_copy).classes("center self-center")
-                                                await sayt_copy(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
+                                                if system() == "Windows":
+                                                    await sayt_copy(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
+                                                else:
+                                                    await sayt_copy(r"\home\ncik\Ansible-Website\Webui\csv's\lookup.csv")
                                                 global searchresults_column_hostindividual
                                             searchresults_column_hostindividual = ui.column().classes("w-full items-center")
     return Listitem
