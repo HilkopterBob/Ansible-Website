@@ -2,6 +2,7 @@ from nicegui import ui, app
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi import Request
 from typing import Dict
+import platform
 
 
 #from pages import login_page, landing_page, logout, admin_panel
@@ -38,9 +39,12 @@ async def logout_page(request: Request) -> None:
 
 
 
+if platform.system() == "Windows":
+    ui.run(port=80, dark=True, title="Ansible Automation Hub",\
+        favicon=r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\static\favicon-32x32.png",\
+    )
+else:
+    ui.run(port=80, dark=True, title="Ansible Automation Hub",\
+        favicon=r"/home/nick/Ansible-Website/Webui/static/favicon-32x32.png",\
+    )
 
-
-
-ui.run(port=80, dark=True, title="Ansible Automation Hub",\
-    favicon=r"./static/favicon-32.32.png",\
-)
