@@ -27,7 +27,7 @@ async def place_submitted_search_values(container):
         for item in search_values:
             with ui.row().classes("w-full") as row:
                 ui.label(text=item)
-                ui.button("", on_click=lambda e, row=row: container.remove(row)  ).props("icon=delete")
+                ui.button("", on_click=lambda e, row=row: container.remove(row)).props("icon=delete")
 
 async def place_submitted_search_values_copy(container):
     search_values = get_checked_results_copy()
@@ -35,7 +35,7 @@ async def place_submitted_search_values_copy(container):
         for item in search_values:
             with ui.row().classes("w-full") as row:
                 ui.label(text=item)
-                ui.button("", on_click=lambda e, row=row: container.remove(row)  ).props("icon=delete")
+                ui.button("", on_click=lambda e, row=row: container.remove(row)).props("icon=delete")
 
 
 async def place_submitted_search_values_copy(container):
@@ -55,8 +55,8 @@ async def listitem():
                 ui.label("playbok name")
                 ui.label("hosts")
                 with ui.row():
-                    ui.button("").props("icon=play_arrow")
-                    ui.button("").props("icon=edit")
+                    ui.button("").props("icon=play_arrow outline")
+                    ui.button("").props("icon=edit outline")
         with ui.card().classes("w-full") as card:
                             with ui.row().classes("w-full items-center justify-between") as row:
                                 with ui.card().classes("w-full") as card:
@@ -89,7 +89,7 @@ async def listitem():
                                         with ui.column().classes("w-full self-center").bind_visibility_from(host_groups, "value"):
                                             #searchbar = sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                             with ui.row().classes("w-full asolute-center self-center"):
-                                                ui.button("Submit", on_click= callfunc_place_submitted).classes("self-center")
+                                                ui.button("Submit", on_click= callfunc_place_submitted).classes("self-center").props("outline")
                                                 if system() == "Windows":
                                                     await sayt(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                                 else:
@@ -99,7 +99,7 @@ async def listitem():
                                                 
                                         with ui.column().classes("w-full self-center").bind_visibility_from(host_individual, "value"):
                                             with ui.row().classes("w-full asolute-center self-center"):
-                                                ui.button("Submit", on_click=callfunc_place_submitted_copy).classes("center self-center")
+                                                ui.button("Submit", on_click=callfunc_place_submitted_copy).classes("center self-center").props("outline")
                                                 if system() == "Windows":
                                                     await sayt_copy(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\csv's\lookup.csv")
                                                 else:
