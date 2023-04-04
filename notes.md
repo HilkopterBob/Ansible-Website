@@ -38,6 +38,7 @@
  - formatierung von suchergebnissen 
 
 
-## new branch modularization
-
- - alles auf modularisierung und best practices umbauen
+# bis zur 0.9 nötig:
+- values müssen populiert werden können, und zwar zur runtime
+- playbooks aus dem preset bereich müssen gestartet werden können -> gehen zu running über
+- running playbooks müssen im dropdown ein console window kriegen um shelloutput anzuzeigen
