@@ -1,0 +1,73 @@
+---
+  - hosts: all
+    collections:
+      - arubanetworks.aos_switch
+    vars:
+      ansible_connection: network_cli
+      flag: successfull
+
+
+    tasks:
+      - name: looking for old versions...
+        arubaoss_command:
+          commands:
+            - 'show version'
+          wait_for:
+            - result[0] contains "15_"
+            - result[0] contains "YA_"
+          match: all
+          retries: 5
+          interval: 5
+        register: command_result
+        ignore_errors: yes
+
+      - name: Set flag
+        set_fact: flag = failed
+        when: "'FAILED' in command_result.stderr"
+
+      - name: "Updating Firmware via TFTP [Type: YA]"
+        when: flag != failed
+        arubaoss_command:
+          commands:
+            - copy tftp flash 192.168.0.2 YA_16_11_0010.swi primary
+          prompt:
+            - "Continue (y/n)?"
+          answer:
+            - y
+        ignore_errors: yes
+
+  - hosts: all
+    collections:
+      - arubanetworks.aos_switch
+    vars:
+      ansible_connection: network_cli
+
+    tasks:
+      - name: looking for old versions...
+        arubaoss_command:
+          commands:
+            - 'show version'
+          wait_for:
+            - result[0] contains "15_"
+            - result[0] contains "YB_"
+          match: all
+          retries: 5
+          interval: 5
+        ignore_errors: yes
+
+      - name: Set flag
+        set_fact: flag = failed
+        when: "'FAILED' in command_result.stderr"
+
+      - name: "Updating Firmware via TFTP [Type: YB]:"
+        when: flag != failed
+        arubaoss_command:
+          commands:
+            - copy tftp flash 192.168.0.2 YB_16_11_0010.swi primary
+          prompt:
+            - "Continue (y/n)?"
+          answer:
+            - y
+        ignore_errors: True
+  
+  

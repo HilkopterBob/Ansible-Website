@@ -1,0 +1,20 @@
+kleine_switche:
+  hosts:
+    switch2:
+      ansible_host: 192.168.0.201
+      ansible_user: manager
+      ansible_password: Tetanusskopfnuss99
+      ansible_connection: local
+      ansible_network_os: arubanetworks.aos_switch.arubaoss
+    switch4:
+      ansible_host: 192.168.0.203
+      ansible_user: manager
+      ansible_password: Tetanusskopfnuss99
+      ansible_connection: local
+      ansible_network_os: arubanetworks.aos_switch.arubaoss
+    switch5:
+      ansible_host: 192.168.0.204
+      ansible_user: manager
+      ansible_password: Tetanusskopfnuss99
+      ansible_connection: local
+      ansible_network_os: arubanetworks.aos_switch.arubaoss

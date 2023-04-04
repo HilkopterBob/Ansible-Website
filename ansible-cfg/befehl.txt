@@ -1,0 +1,1 @@
+ANSIBLE_NETWORK_GROUP_MODUELS=arubaoss ansible-playbook <playbook>

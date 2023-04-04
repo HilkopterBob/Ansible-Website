@@ -1,0 +1,72 @@
+#Nicht funktionsfähig
+#
+#
+
+---
+  - hosts: grosse_switche,!switch1
+    vars:
+      image_name: "YA_16_11_0010.swi"
+      ansible_connection: network_cli
+    become: true
+    become_user: nick
+    collections:
+      - arubanetworks.aos_switch
+    tasks:
+      - name: Collecting version...
+        ignore_errors: True
+        arubaoss_command:
+          commands:
+            - 'show version'
+          wait_for:
+            - result[0] contains "YA."
+  - hosts: grosse_switche,!switch1
+    vars:
+      image_name: "YA_16_11_0010.swi"
+      ansible_connection: network_cli
+    become: true
+    become_user: nick
+    collections:
+      - arubanetworks.aos_switch
+    tasks:
+      - name: Firmwareupdate (secondary)
+        arubaoss_file_transfer:
+          file_url: "http://192.168.0.2:3000/{{image_name}}"
+          file_type: "FTT_FIRMWARE"
+          action: "FTA_DOWNLOAD"
+          boot_image: "BI_SECONDARY_IMAGE"
+      - name: Firmwareupdate (primary)
+        arubaoss_file_transfer:
+          file_url: "http://192.168.0.2:3000/{{image_name}}"
+          file_type: "FTT_FIRMWARE"
+          action: "FTA_DOWNLOAD"
+          boot_image: "BI_SECONDARY_IMAGE"
+
+      - name: devcie reboot
+        arubaoss_reboot:
+          boot_image: "BI_PRIMARY_IMAGE"
+
+  - hosts: kleine_switche,!switch1
+    vars:
+      image_name: "YB_16_11_0010.swi"
+    become: true
+    become_user: nick
+    collections:
+      - arubanetworks.aos_switch
+    tasks:
+      - name: Firmwareupdate (secondary)
+        arubaoss_file_transfer:
+          file_url: "http://192.168.0.2:3000/{{image_name}}"
+          file_type: "FTT_FIRMWARE"
+          action: "FTA_DOWNLOAD"
+          boot_image: "BI_SECONDARY_IMAGE"
+      - name: Firmwareupdate (primary)
+        arubaoss_file_transfer:
+          file_url: "http://192.168.0.2:3000/{{image_name}}"
+          file_type: "FTT_FIRMWARE"
+          action: "FTA_DOWNLOAD"
+          boot_image: "BI_SECONDARY_IMAGE"
+
+      - name: devcie reboot
+        arubaoss_reboot:
+          boot_image: "BI_PRIMARY_IMAGE"
+

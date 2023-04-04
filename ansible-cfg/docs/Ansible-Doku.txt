@@ -1,0 +1,89 @@
+für switch tests:
+
+Ansible und switch müssen im gleichem netz sein
+Um ip addresse in ubuntu temp. zu ändern:
+sudo ip addr add <ip>/<cidr> dev <nic>
+
+um befehle mit dem aruba modul zu starten:
+sudo ANSIBLE_NETWORK_GROUP_MODULES=arubaoss ansible-playbook <playbook> -i <hostfile.yml>
+
+ tftp datein werden unter root/srv gespeichert.
+
+auf dem switch muss rest api aktiviert werden:
+web-management ssl/plaintext
+rest-interface
+
+
+
+es läuft ein tftp server über welchen der switch die
+config auf dem ansible server ablegen soll.
+der tftp server funktioniert bissher nicht.
+tftp pfad:
+root/tftpboot/
+
+
+
+
+
+
+
+
+
+Resourcen to check:
+https://github.com/aruba/aoscx-ansible-workflows/blob/master/copy_config_using_cli_prompt.yml
+
+https://github.com/aruba/aoscx-ansible-collection
+
+https://github.com/aruba/aruba-ansible-modules/issues/130
+
+https://support.hpe.com/hpesc/public/docDisplay?docId=a00050273en_us
+
+
+
+wireshark sagt das der switch auf read mit no content antwortet...
+mit user nick bei sftp kommt transport error
+---------------
+
+try file_transport (test5.yml)
+
+test7 backups
+test8 firmware ausrollen
+
+ssl für https komunikation:
+http server:
+python3 -m http.server 3000
+https://ubuntu.com/server/docs/security-certificates
+https://techhub.hpe.com/eginfolib/networking/docs/switches/RA/15-18/5998-8151_ra_2620_asg/content/ch09s05.html
+https://github.com/aruba/aos-switch-ansible-collection/issues/33
+
+config auf switch
+
+
+
+____________________________________
+
+Debugging Experience
+____________________________________
+
+Redirect error (307):
+Die zeit ist falsch:
+
+-	clock datetime 16:00:00 03/23/2023
+
+-	rest-interface
+-	web-management
+-	web-management ssl
+
+-	crypt pki enroll-self-signed certificate-name DrAcHeNlOrD key-type rsa key-size 2048 subject common-name gaylord country US locality schwerin org c.d.buettner org-unit "Information Services" state deutschland usage web valid-start 05/20/2019 valid-end 05/20/2029
+
+
+
+TFTP-Server:
+unter ~/firmware folgenden befehl:
+sudo python3 tftp-server.py
+
+Damit wird tftp server in Firmware gestartet
+
+
+
+

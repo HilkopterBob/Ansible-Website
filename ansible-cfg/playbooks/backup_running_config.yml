@@ -1,0 +1,26 @@
+---
+  - hosts: localhost
+    become_user: nick
+    collections:
+      - arubanetworks.aos_switch
+    tasks:
+      - set_fact:
+          directory_name: "{{ansible_date_time.iso8601}}"
+      - name: creating subdirectory...
+        file:
+          path: "/home/nick/aos/backup/{{directory_name}}"
+          state: directory
+
+  - hosts: all
+    become_user: nick
+    collections:
+      - arubanetworks.aos_switch
+    vars:
+      ansible_connection: network_cli
+    tasks:
+      - name: backing up configs
+        arubaoss_config:
+          backup: True
+          backup_options:
+            filename: "{{inventory_hostname}}"
+            dir_path: "/home/nick/aos/backup/{{hostvars['localhost']['directory_name']}}/"
