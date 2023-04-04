@@ -32,5 +32,7 @@ async def jobitem():
                                         with ui.row().classes("w-full items-center"):
                                             ui.label("param3:")         #zb. backuppatch
                                             ui.input()
+        with ui.card().classes("w-full h-96") as card:
+            log = ui.log(max_lines=100).classes("w-full h-96")
     return Jobitem
 

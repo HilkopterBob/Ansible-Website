@@ -20,6 +20,27 @@ async def content(request: Request, session_info) -> None:
     if not await is_authenticated(request, session_info):  
         return RedirectResponse('/login')   
 
+    # ~~~~~ Main Page ad-hoc commands Card ~~~~~ #
+
+    with ui.card().classes("w-full") as card:
+        ui.label("Ad-hoc Commands:").classes("text-h6")
+        with ui.row() as row:
+            with ui.column():
+                ui.label("")
+                ui.input()
+            with ui.column():
+                ui.select(["IP1", "IP2", "IP3"])
+            with ui.column():
+                ui.select(["Backup", "Open Port", "Standard Conf"])
+
+
+        
+        
+        
+
+    # ~~~~~ End: Main Page ad-hoc commands Card ~~~~~ #
+
+    ui.label(" ")
 
     # ~~~~~ Main Page Preset Builder Card ~~~~~ #
 

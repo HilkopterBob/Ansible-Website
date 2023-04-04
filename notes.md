@@ -40,5 +40,4 @@
 # bis zur 0.9 nötig:
 - values müssen populiert werden können, und zwar zur runtime
 - playbooks aus dem preset bereich müssen gestartet werden können -> gehen zu running über
-- running playbooks müssen im dropdown ein console window kriegen um shelloutput anzuzeigen
 - shutdown warnung muss über admin pannel an alle user gesendet werden können

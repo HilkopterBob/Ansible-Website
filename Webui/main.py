@@ -1,4 +1,4 @@
-from nicegui import ui, app
+from nicegui import ui, app, globals
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi import Request
 from typing import Dict
