@@ -37,7 +37,7 @@ async def content(request: Request, session_info) -> None:
                 #eine seite weiter zu blättern und die nächsten 50 items zu sehen
                     with col:
                         for _ in itertools.repeat(None, 5): await listitem()
-            with ui.tab_panel('Builder'):
+            with ui.tab_panel('Builder').classes("w-full"):
                 await builder_content.content()
 
     # ~~~~~ End: Main Page Preset Builder Card ~~~~~ #
