@@ -1,58 +1,96 @@
-from nicegui import ui, app
-from fastapi import Request
-from contextlib import contextmanager
-from starlette.middleware.sessions import SessionMiddleware
-from typing import Dict
-from fastapi.responses import RedirectResponse
-import asyncio
+from __future__ import annotations
+from typing import Optional
+from nicegui import ui
 
-global clicks
-clicks = 0
+global Elements
+class Column(ui.column):
 
-async def notify():
-    global clicks
-    ui.notify("clicked", type="positive")
-    clicks = clicks + 1
+    def __init__(self, name: str) -> None:
+        super().__init__()
+        with self.classes('p-4 rounded shadow').style("margin: 1px 0 0 1px; box-shadow: 0 0 0 1px #03DAC5;"):
+            ui.label(name).classes('text-bold')
+        self.name = name
+        self.on('dragover.prevent', self.highlight)
+        self.on('dragleave', self.unhighlight)
+        self.on('drop', self.move_card)
 
+    def highlight(self) -> None:
+        pass # not needed 
 
-with ui.dialog() as dialog, ui.card():
-    ui.label("Trag den namen ein, unter dem dein highscore angezeigt werden soll:")
-    name_field = ui.input()
-    ui.button("Enter", on_click=lambda: dialog.submit(name_field.value))
+    def unhighlight(self) -> None:
+        pass # not needed
 
+    def move_card(self) -> None:
+        if self.id not in Elements._collect_descendant_ids():
+            with self:
+                Card(Card.dragged.text)
+                """
+                The moved element is only created if it is not dropped in Elements, or in a child of Elements. 
+                """
 
-async def save_scroe():
-    scores = open("scores.txt","a")
-    name = await dialog()
-    scores.writelines(f"name: {name} got {clicks} clicks!")
-    ui.open("/")
-
-async def start_timer():
-    timer = ui.circular_progress(max=15, min=0)
-    i = 15
-    clicker = ui.button("click", on_click=notify)
-    while i >= 0:
-        timer.set_value(i)
-        await asyncio.sleep(1)
-        i-=1
-    timer.classes("hidden")
-    clicker.classes("hidden")
-    ui.label(f"Du hast {clicks} clicks erreicht!")
-    save_button = ui.button("Um deinen highscore zu speicher, click mich", on_click=save_scroe)
-    ui.button("restart", on_click=lambda: ui.open("/"))
+        self.unhighlight()
+        if Card.dragged.parent_slot.parent.name != "Elements":
+            Card.dragged.parent_slot.parent.remove(Card.dragged)
+            """
+            only if the parent is not the elements card, the drag-n-drop element is removed
+            """
 
 
+class Card(ui.card):
+    dragged: Optional[Card] = None
+
+    def __init__(self, text: str, child_slot: bool = False, extendable: bool = False) -> None:
+        super().__init__()
+        self.text = text
+        self.name = text
+        self.child_slot = child_slot
+        self.extendable = extendable
+
+        with self.props('draggable').classes('w-full cursor-pointer'):
+            ui.label(self.text)
+        self.on('dragstart', self.handle_dragstart)
+
+        if self.child_slot == True:
+            child_slot = self.add_slot("childs", template="default")
+            with self:
+                global row
+                if self.extendable:
+                    with ui.row():
+                        ui.button("", on_click=lambda: self.add_child_container(row)).props("icon=add")
+                        ui.button("", on_click=lambda: self.remove_child_container(row)).props("icon=remove")
+                with ui.row() as _row:
+                    row = _row
+                self.add_child_container(row)
 
 
+    def handle_dragstart(self) -> None:
+        Card.dragged = self
 
-@ui.page('/')
-async def index_page(request: Request) -> None:
-    return await content(request)
+    def add_child_container(self, parrent):
+        with parrent:
+            Column("added Child container")
+    
+    def remove_child_container(self, parrent):
+        try:
+            parrent.remove(-1)
+        except IndexError:
+            pass
 
-async def content(request: Request) -> None:
-    ui.button("start clicker", on_click=lambda: dialog.open())
+async def content():
+    global Elements
+    with ui.element("div").classes("w-full") as div:
+        with ui.row().classes("w-full items-center justify-between"):
+            with Column('Current Playbook').classes("w-3/5"):
+                Card('Work in Progress...')
+            with Column('Elements').classes("w-1/5") as Elements:
+                Card('Work in Progress...')
+                Card('Work in Progress...with child slot, non extendable', child_slot=True)
+                Card('Work in Progress...with child slot, extendable', child_slot=True, extendable=True)
+    return div
 
-
+@ui.page("/")
+async def builder():
+    return await content()
 
 
 ui.run()
