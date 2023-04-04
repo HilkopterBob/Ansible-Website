@@ -56,8 +56,8 @@ class Card(ui.card):
                 global row
                 if self.extendable:
                     with ui.row():
-                        ui.button("", on_click=lambda: self.add_child_container(row)).props("icon=add")
-                        ui.button("", on_click=lambda: self.remove_child_container(row)).props("icon=remove")
+                        ui.button("", on_click=lambda: self.add_child_container(row)).props("icon=add outline")
+                        ui.button("", on_click=lambda: self.remove_child_container(row)).props("icon=remove outline")
                 with ui.row() as _row:
                     row = _row
                 self.add_child_container(row)

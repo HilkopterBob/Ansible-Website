@@ -27,7 +27,7 @@ async def place_submitted_search_values(container):
         for item in search_values:
             with ui.row().classes("w-full") as row:
                 ui.label(text=item)
-                ui.button("", on_click=lambda e, row=row: container.remove(row)).props("icon=delete")
+                ui.button("", on_click=lambda e, row=row: container.remove(row)).props("icon=delete outline")
 
 async def place_submitted_search_values_copy(container):
     search_values = get_checked_results_copy()
@@ -35,16 +35,7 @@ async def place_submitted_search_values_copy(container):
         for item in search_values:
             with ui.row().classes("w-full") as row:
                 ui.label(text=item)
-                ui.button("", on_click=lambda e, row=row: container.remove(row)).props("icon=delete")
-
-
-async def place_submitted_search_values_copy(container):
-    search_values = get_checked_results_copy()
-    with container:
-        for item in search_values:
-            with ui.row().classes("w-full") as row:
-                ui.label(text=item)
-                ui.button("", on_click=lambda e, row=row: container.remove(row)).props("icon=delete")
+                ui.button("", on_click=lambda e, row=row: container.remove(row)).props("icon=delete outline")
 
 async def listitem():
     #creates line shaped container
