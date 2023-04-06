@@ -1,45 +1,44 @@
 from platform import system
 import glob
-import ntpath
+from yaml import load, SafeLoader
 
-async def finder():
-    pass
-
-def populator(inventory = False, playbooks = False,  inventory_names = [], playbook_names = [], cfg = False):
-    """ gets requested info from files of the ansible-cfg dir. returns info as list of dicts 
-    
-        :inventory: Flag, if true and no inventory_names will return all infos from all inventorys.
-                    if inventory_names > 0: will return infos only from requested files.
-        :inventory_names: list of strings, containing files names. Only for specific requests.
-        :playbook: Flag, if true and no playbook_names will return all infos from all playbooks.
-                    if playbook_names > 0: will return infos only from requested files.
-        :playbook_names: list of strings, containing files names. Only for specific requests.
-        :cfg: will return infos about the cfg
-
+def marker(_type: str):
+    """ Der Loader ist dafür da, genau zu bestimmen, wie viele datein in der Gui angezeigt werden müssen.
+        Auf einfrage eines bestimmten typs, gibt der loader die anzahl unterschiedlicher datein zurück.
+        :_type: [str]  Bestimmt den typ der anfrage (inventory, playbooks, config)
     """
     if system() == "Windows":
         path_ansible_dir = r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\ansible-cfg"
     else:
         path_ansible_dir = r"/home/nick/Ansible-Website/ansible-cfg/"
-
-    if inventory and len(inventory_names) == 0:
-        list_of_infos = []
+    if _type == "inventory":
         list_of_files = glob.glob(path_ansible_dir + "\\inventory\\*.yml")
-        for path in list_of_files:
-            _file = open(path)
-            list_of_infos.append({f"{ntpath.basename(path)}":{}})
-            for index, line in enumerate(_file):
-                list_of_infos[0][ntpath.basename(path)]
-    if inventory and len(inventory_names) > 0:
-        pass
-    if playbooks and len(playbook_names) == 0:
-        pass
-    if playbooks and len(playbook_names) > 0:
-        pass
-    if cfg:
-        pass
+        return list_of_files
+    if _type == "playbooks":
+        list_of_files = glob.glob(path_ansible_dir + "\\playbooks\\*.yml")
+        return list_of_files
+    if _type == "config":
+        list_of_files = glob.glob(path_ansible_dir + "\\*.cfg")
+        return list_of_files
+
+
+def informer(path: str):
+    """ Oeffnet Datein und gibt ihren inhalt zurück.
+        :path: [str] pfad zur datei
+    """
+    stream = open(path)
+    _yaml = load(stream=stream, Loader=SafeLoader)
+    def find(d, tag):
+        if tag in d:
+            yield d[tag]
+        for k, v in d.items():
+            if isinstance(v, dict):
+                for i in find(v, tag):
+                    yield i
+    for val in find(_yaml, ''):
+        print(val)
     
-populator(True)
+print(marker("playbooks"))
 
 
 

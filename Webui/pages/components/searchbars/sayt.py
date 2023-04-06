@@ -23,21 +23,18 @@ async def search(e: events.ValueChangeEventArguments) -> None:
     results_container.clear()
     if e.value == "":
         await clear_checked_results()
-    running_query = search_in_csv(e.value)
+    running_query =  search_in_csv(e.value)
     response = await running_query
     for index, item in enumerate(response):
         if item == "":
             response.pop(index)
     if response != []:
         with results_container:  
-            for item in response:  # iterate over the response data of the api
+            for item in response:  
                 with ui.row().classes('w-full items-center self-center') as row:
                     checkbox = ui.checkbox(text=item, on_change=check).classes('self-center')
     running_query = None
 
-# create a search field which is initially focused and leaves space at the top
-# fr fr falls das jemand ließt, dass was da unten los ist ist mir echt peinlich, 
-# aber hauptsache ich hab nachher search as you type auf der page
 async def sayt (file):
     global checked_results
     global search_field
@@ -45,6 +42,7 @@ async def sayt (file):
     global results_container
     global file_path
     file_path = file
+    
     search_field = ui.input(on_change=search) \
         .props('input-class="ml-3"') \
         .classes('w-96 self-center transition-all')

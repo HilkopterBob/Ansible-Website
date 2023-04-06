@@ -32,7 +32,7 @@
  - formular für ticketsystem einrichten (usability/feadback)
  - Rubriken nach firmen
  - optionaler whitemode (mit Rot und weiß) irgh
- - man kann auf admin panel wechseln als normaler user
+ - man kann auf admin panel wechseln als normaler user  (auth func für admins machen und verknüpfen)
  - login screen aufhübschen mit zb. logo und Ansible automation hub uso
  - formatierung von suchergebnissen 
 
@@ -41,3 +41,9 @@
 - values müssen populiert werden können, und zwar zur runtime
 - playbooks aus dem preset bereich müssen gestartet werden können -> gehen zu running über
 - shutdown warnung muss über admin pannel an alle user gesendet werden können
+
+# admin panel:
+- user erstellen, löschen, sperren, bannen, password zurücksetzen
+- Daten über nutzerverhalten
+- Daten zu Ansible 
+- Daten zur maschine (Psutil )

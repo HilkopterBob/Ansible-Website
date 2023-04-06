@@ -59,7 +59,7 @@ async def listitem():
                                         ui.label("%%descr%%")
                                 with ui.card().classes("w-full") as card:
                                     with ui.row().classes("w-full"):
-                                        ui.label("Parameter:")
+                                        ui.label("Tasks:")
                                         with ui.row().classes("w-full items-center"):
                                             ui.label("param1:")         #zb. backuppatch
                                             ui.input()
