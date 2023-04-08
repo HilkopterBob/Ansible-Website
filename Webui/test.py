@@ -15,6 +15,7 @@ class Column(ui.column):
         self.on('dragleave', self.unhighlight)
         self.on('drop', self.move_card)
 
+
     def highlight(self) -> None:
         pass # not needed 
 
