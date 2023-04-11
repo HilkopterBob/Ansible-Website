@@ -1,0 +1,11 @@
+hosts: all
+collections:
+  - arubanetworks.aos_switch
+tasks:
+  - name: Create VLAN 300
+    arubaoss_vlan:
+      vlan_id: 400
+      name: "vlan400"
+      config: "create"
+      command: config_vlan
+
