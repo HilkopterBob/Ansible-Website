@@ -6,32 +6,36 @@ from utils import populator
 
 
 
+async def listitem_inside(index):
+    
+    with ui.column().classes("w-full")as column:
 
 
 
 
 
-# with ui.card().classes("w-full") as card:
-#     with ui.row().classes("w-full items-center justify-between") as row:
-#         with ui.card().classes("w-full") as card:
-#             with ui.row().classes("w-full"):
-#                 ui.label("Name:")
-#                 ui.label("%%name%%")
-#             with ui.row().classes("w-full"):
-#                 ui.label("Descr:")
-#                 ui.label("%%descr%%")
-#         with ui.card().classes("w-full") as card:
-#             with ui.row().classes("w-full"):
-#                 ui.label("Tasks:")
-#                 with ui.row().classes("w-full items-center"):
-#                     ui.label("param1:")         #zb. backuppatch
-#                     ui.input()
-#                 with ui.row().classes("w-full items-center"):
-#                     ui.label("param2:")         #zb. backuppatch
-#                     ui.input()
-#                 with ui.row().classes("w-full items-center"):
-#                     ui.label("param3:")         #zb. backuppatch
-#                     ui.input()
+
+        # with ui.card().classes("w-full") as card:
+        #     with ui.row().classes("w-full items-center justify-between") as row:
+        #         with ui.card().classes("w-full") as card:
+        #             with ui.row().classes("w-full"):
+        #                 ui.label("Name:")
+        #                 ui.label("%%name%%")
+        #             with ui.row().classes("w-full"):
+        #                 ui.label("Descr:")
+        #                 ui.label("%%descr%%")
+        #         with ui.card().classes("w-full") as card:
+        #             with ui.row().classes("w-full"):
+        #                 ui.label("Tasks:")
+        #                 with ui.row().classes("w-full items-center"):
+        #                     ui.label("param1:")         #zb. backuppatch
+        #                     ui.input()
+        #                 with ui.row().classes("w-full items-center"):
+        #                     ui.label("param2:")         #zb. backuppatch
+        #                     ui.input()
+        #                 with ui.row().classes("w-full items-center"):
+        #                     ui.label("param3:")         #zb. backuppatch
+        #                     ui.input()
         # with ui.card().classes("w-full") as card:
         #     with ui.row().classes("w-full"):
         #         with ui.row().classes("w-full"):

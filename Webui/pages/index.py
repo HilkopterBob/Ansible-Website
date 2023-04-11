@@ -4,7 +4,7 @@ from fastapi.responses import RedirectResponse
 import itertools
 from .components import listitem, jobitem, builder_content
 
-from .utils import is_authenticated
+from .utils import is_authenticated, populator
 
 
 
@@ -53,11 +53,11 @@ async def content(request: Request, session_info) -> None:
             with ui.tab_panel('Presets'):
                 # inside the Presets tab
                 with ui.column().classes("w-full") as col:
-                #für jede zeile im log wird ein listitem generiert
-                #falls mehr als 50 zeilen generiert wurden, wird unten die möglichkeit gegeben
-                #eine seite weiter zu blättern und die nächsten 50 items zu sehen
-                    with col:
-                        for _ in itertools.repeat(None, 5): await listitem()
+                    list_of_playbooks = populator.marker("playbooks")
+                    for _file in list_of_playbooks:
+                        await listitem(_file)
+                    
+                    
             with ui.tab_panel('Builder').classes("w-full"):
                 await builder_content.content()
 
@@ -79,6 +79,9 @@ async def content(request: Request, session_info) -> None:
                         for _ in itertools.repeat(None, 5): await jobitem()
             with ui.tab_panel('History').classes("h-100"):
                 with ui.column().classes("w-full h-100"):
+                    # TODO: für jede zeile im log wird ein listitem generiert
+                    #falls mehr als 50 zeilen generiert wurden, wird unten die möglichkeit gegeben
+                    #eine seite weiter zu blättern und die nächsten 50 items zu sehen
                     log = ui.log(max_lines=100).classes("w-full h-96")
                     ui.button("push", on_click=lambda: log.push("hello"))
 

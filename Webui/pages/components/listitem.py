@@ -37,13 +37,13 @@ async def place_submitted_search_values_copy(container):
                 ui.label(text=item)
                 ui.button("", on_click=lambda e, row=row: container.remove(row)).props("icon=delete outline")
 
-async def listitem():
+async def listitem(_file):
     #creates line shaped container
     with ui.expansion("").classes("w-full").props("expand-icon-toggle popup") as Listitem:
         with Listitem.add_slot("header"):
             # alles in eine row packen und die dann ober mega groß machen
             with ui.row().classes("w-full items-center justify-between"):
-                ui.label("playbok name")
+                ui.label("filename")
                 ui.label("hosts")
                 with ui.row():
                     ui.button("").props("icon=play_arrow outline")

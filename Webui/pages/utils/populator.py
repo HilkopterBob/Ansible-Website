@@ -1,9 +1,10 @@
 from platform import system
 import glob
-from yaml import load, SafeLoader
+from yaml import load, SafeLoader, FullLoader
+from pprint import pprint
 
 def marker(_type: str):
-    """ Der Loader ist dafür da, genau zu bestimmen, wie viele datein in der Gui angezeigt werden müssen.
+    """ Der marker ist dafür da, genau zu bestimmen, wie viele datein in der Gui angezeigt werden müssen.
         Auf einfrage eines bestimmten typs, gibt der loader die anzahl unterschiedlicher datein zurück.
         :_type: [str]  Bestimmt den typ der anfrage (inventory, playbooks, config)
     """
@@ -22,28 +23,23 @@ def marker(_type: str):
         return list_of_files
 
 
-def informer(path: str):
+def informer(path: str, tag="a"):
     """ Oeffnet Datein und gibt ihren inhalt zurück.
         :path: [str] pfad zur datei
     """
     stream = open(path)
-    _yaml = load(stream=stream, Loader=SafeLoader)
-    def find(d, tag):
-        if tag in d:
-            yield d[tag]
-        for k, v in d.items():
-            if isinstance(v, dict):
-                for i in find(v, tag):
-                    yield i
-    for val in find(_yaml, ''):
-        print(val)
-    
-print(marker("playbooks"))
+    _yaml = load(stream=stream, Loader=FullLoader)
+    return _yaml
 
 
+# pprint(informer(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Test\playbooks\update_via_http.yml"))
 
+_list = []
+with open(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Test\playbooks\update_via_http.yml") as _file:
+    print(_file)
+    for line in _file:
+        _list.append(_file.readline())
 
-
-
+pprint(_list)
 
 
