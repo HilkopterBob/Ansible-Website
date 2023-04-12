@@ -2,7 +2,8 @@ from nicegui import ui
 from fastapi import Request
 from fastapi.responses import RedirectResponse
 import itertools
-from .components import listitem, jobitem, builder_content
+from .components import listitem, builder_content
+
 
 from .utils import is_authenticated, populator
 
@@ -11,12 +12,15 @@ from .utils import is_authenticated, populator
 
 
 
-
+def add_jobitem(_object):
+    with col_jobitems:
+        _object
 
 
 
 
 async def content(request: Request, session_info) -> None:
+    global col_jobitems
     if not await is_authenticated(request, session_info):  
         return RedirectResponse('/login')   
 
@@ -74,9 +78,8 @@ async def content(request: Request, session_info) -> None:
         
         with ui.tab_panels(tabs, value='Jobs').classes("w-full"):
             with ui.tab_panel('Jobs'):
-                with ui.column().classes("w-full") as col:
-                    with col:
-                        for _ in itertools.repeat(None, 5): await jobitem()
+                with ui.column().classes("w-full") as col_jobitems:
+                    pass
             with ui.tab_panel('History').classes("h-100"):
                 with ui.column().classes("w-full h-100"):
                     # TODO: für jede zeile im log wird ein listitem generiert

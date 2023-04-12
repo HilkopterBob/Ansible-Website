@@ -1,0 +1,51 @@
+- name: org task
+  hosts: all
+  collections:
+    - arubanetworks.aos_switch
+  tasks:
+    - name: Create VLAN 300
+      arubaoss_vlan:
+        vlan_id: 400
+        name: "vlan400"
+        config: "create"
+        command: config_vlan
+
+    - name: Copy task
+      arubaoss_vlan:
+        vlan_id: 400
+        name: "vlan400"
+        config: "create"
+        command: config_vlan
+  
+    - name: Copy task 2
+      arubaoss_vlan:
+        vlan_id: 400
+        name: "vlan400"
+        config: "create"
+        command: config_vlan
+
+- name: copy task
+  hosts: all
+  collections:
+    - arubanetworks.aos_switch
+  tasks:
+    - name: Create VLAN 300
+      arubaoss_vlan:
+        vlan_id: 400
+        name: "vlan400"
+        config: "create"
+        command: config_vlan
+
+    - name: Copy task
+      arubaoss_vlan:
+        vlan_id: 400
+        name: "vlan400"
+        config: "create"
+        command: config_vlan
+  
+    - name: Copy task 2
+      arubaoss_vlan:
+        vlan_id: 400
+        name: "vlan400"
+        config: "create"
+        command: config_vlan

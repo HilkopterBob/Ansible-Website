@@ -32,14 +32,4 @@ def informer(path: str, tag="a"):
     return _yaml
 
 
-# pprint(informer(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Test\playbooks\update_via_http.yml"))
-
-_list = []
-with open(r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Test\playbooks\update_via_http.yml") as _file:
-    print(_file)
-    for line in _file:
-        _list.append(_file.readline())
-
-pprint(_list)
-
 
