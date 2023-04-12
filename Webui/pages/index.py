@@ -2,7 +2,7 @@ from nicegui import ui
 from fastapi import Request
 from fastapi.responses import RedirectResponse
 import itertools
-from .components import listitem, builder_content
+from .components import listitem, builder_content, jobitem
 
 
 from .utils import is_authenticated, populator
@@ -79,7 +79,7 @@ async def content(request: Request, session_info) -> None:
         with ui.tab_panels(tabs, value='Jobs').classes("w-full"):
             with ui.tab_panel('Jobs'):
                 with ui.column().classes("w-full") as col_jobitems:
-                    pass
+                    for _ in itertools.repeat(None, 5): await jobitem()
             with ui.tab_panel('History').classes("h-100"):
                 with ui.column().classes("w-full h-100"):
                     # TODO: für jede zeile im log wird ein listitem generiert

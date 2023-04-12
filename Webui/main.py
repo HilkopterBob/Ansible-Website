@@ -24,6 +24,7 @@ async def index_page(request: Request) -> None:
 @ui.page('/login')
 async def login_page(request: Request) -> None:
     with theme.frame(header=False):
+        ui.colors(primary="#BB86FC", secondary="#03DAC5", accent="#03DAC5", warning="#03DAC5", info="#BB68FC")
         return await login.content(request, session_info)
 
 @ui.page('/admin-panel')
@@ -40,7 +41,7 @@ async def logout_page(request: Request) -> None:
 
 
 if platform.system() == "Windows":
-    ui.run(port=80, dark=True, title="Ansible Automation Hub",\
+    ui.run(port=80, title="Ansible Automation Hub",\
         favicon=r"C:\Users\npodewils\Desktop\p\C.D.Buettner\Ansible-Website\Webui\static\favicon-32x32.png",\
     )
 else:
