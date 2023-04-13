@@ -5,7 +5,7 @@ from platform import system
 
 async def listitem(_file):
     #creates line shaped container
-    with ui.expansion("").classes("w-full").props("expand-icon-toggle popup") as Listitem:
+    with ui.expansion("").classes("w-full").props("expand-icon-toggle popup bordered") as Listitem:
         with Listitem.add_slot("header"):
             # alles in eine row packen und die dann ober mega groß machen
             with ui.row().classes("w-full items-center justify-between"):

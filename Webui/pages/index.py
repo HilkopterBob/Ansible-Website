@@ -22,7 +22,7 @@ def add_jobitem(_object):
 async def content(request: Request, session_info) -> None:
     global col_jobitems
     if not await is_authenticated(request, session_info):  
-        return RedirectResponse('/login')   
+        return RedirectResponse('/login') 
 
     # ~~~~~ Main Page ad-hoc commands Card ~~~~~ #
 
