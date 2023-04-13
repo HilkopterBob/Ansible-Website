@@ -1,6 +1,6 @@
 from ..components import jobitem
-from .. import index
+from .. import conti
 
 def start_playbook(path, object):
-    jobitem("testjob", )
+    pass
 

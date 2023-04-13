@@ -10,8 +10,9 @@ from .utils import is_authenticated
 
 @ui.page('/logout')
 async def content(request: Request, session_info) -> None:
-    if await is_authenticated(request, session_info):
-        session_info.pop(request.session['id'])
-        request.session['id'] = None
-        return RedirectResponse('/login')
-    return RedirectResponse('/')
+    try:
+            session_info.pop(request.session['id'])
+            request.session['id'] = None
+    except:
+        pass
+    return RedirectResponse('/login')

@@ -6,7 +6,7 @@ import platform
 
 
 #from pages import login_page, landing_page, logout, admin_panel
-from pages import index, login, admin_panel, logout
+from pages import conti, login, admin_panel, logout, intern
 import theme
 
 MATPLOTLIB = False
@@ -17,10 +17,17 @@ session_info: Dict[str, Dict] = {}
 
 app.add_static_files("/static", "static")
 
+
+
 @ui.page('/')
 async def index_page(request: Request, client: Client) -> None:
-    with theme.frame(client, _session_info=session_info, navtitle='Ansible Automation Hub', header=True):
-        return await index.content(request, session_info, client=client)
+    with theme.frame(client, _session_info=session_info, navtitle='Ansible Automation Hub Contipark', header=True):
+        return await conti.content(request, session_info, client=client)
+
+@ui.page('/intern')
+async def index_page(request: Request, client: Client) -> None:
+    with theme.frame(client, _session_info=session_info, navtitle='Ansible Automation Hub C.D. Büttner', header=True):
+        return await intern.content(request, session_info, client=client)
 
 @ui.page('/login')
 async def login_page(request: Request, client: Client) -> None:

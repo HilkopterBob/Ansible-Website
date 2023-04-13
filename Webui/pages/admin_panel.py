@@ -4,6 +4,10 @@ from fastapi.responses import RedirectResponse
 from asyncio import sleep
 from .utils.auth import is_authenticated, is_admin
 
+async def bye():
+    for client in globals.clients.values():
+        with client:
+            ui.notify('Goodbye!', type="warning")
 
 
 async def content(request: Request, session_info, client) -> None :
@@ -28,4 +32,6 @@ async def content(request: Request, session_info, client) -> None :
             document.body.classList.add("dark");
         ''', respond=False)
     ui.label("admin panel")
+    ui.button("byee", on_click=bye)
+    
     

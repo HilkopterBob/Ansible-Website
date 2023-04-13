@@ -1,6 +1,4 @@
 from contextlib import contextmanager
-
-
 from nicegui import ui, events
 
 global _header
