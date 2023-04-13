@@ -25,6 +25,9 @@ async def content(request: Request, session_info) -> None:
     if await is_authenticated(request, session_info):
         return ui.open('/')
     request.session['id'] = str(uuid.uuid4())  # this stores a new session ID in the cookie of the client
+    request.session['color_scheme'] = "color_scheme"
+    session_info[request.session['color_scheme']] = {'dark_mode':True}
+
     with ui.card().classes('absolute-center'):
         username = ui.input('Username').on('keydown.enter', try_login)
         password = ui.input('Password').props('type=password').on('keydown.enter', try_login)

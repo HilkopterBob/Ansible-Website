@@ -18,22 +18,23 @@ app.add_static_files("/static", "static")
 
 @ui.page('/')
 async def index_page(request: Request) -> None:
-    with theme.frame('Ansible Automation Hub', header=True):
+    with theme.frame(_session_info=session_info, navtitle='Ansible Automation Hub', header=True):
         return await index.content(request, session_info)
 
 @ui.page('/login')
 async def login_page(request: Request) -> None:
-    with theme.frame(header=False):
+    with theme.frame(_session_info=session_info, header=False):
+        ui.colors(primary="#BB86FC", secondary="#03DAC5", accent="#03DAC5", warning="#03DAC5", info="#BB68FC")
         return await login.content(request, session_info)
 
 @ui.page('/admin-panel')
 async def admin_page(request: Request) -> None:
-    with theme.frame("Administration Panel", header=True):
+    with theme.frame(_session_info=session_info, navtitle="Administration Panel", header=True):
         return await admin_panel.content(request, session_info)
 
 @ui.page('/logout')
 async def logout_page(request: Request) -> None:
-    with theme.frame(header=False):
+    with theme.frame(_session_info=session_info, header=False):
         return await logout.content(request, session_info)
 
 
