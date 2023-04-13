@@ -6,9 +6,14 @@ from nicegui import ui, events
 global _header
 global switch
 global session_info
+global right_drawer
+global client
+
 dark_mode = True
 
 async def make_dark():
+    global client
+    await client.connected()
     ui.colors(primary="#BB86FC", secondary="#03DAC5", accent="#03DAC5", warning="#03DAC5", info="#BB68FC")
     await ui.run_javascript('''
         Quasar.Dark.set(true);
@@ -17,6 +22,8 @@ async def make_dark():
     ''', respond=False)
 
 async def make_light():
+    global client
+    await client.connected()
     ui.colors(primary="#FF3300", secondary="#FFFF33", accent="#FFFF33", warning="#FFFF33", info="#FF3300")
     await ui.run_javascript('''
         Quasar.Dark.set(false);
@@ -26,8 +33,12 @@ async def make_light():
 
 
 async def set_color_mode():
+    global client
     global _header
     global session_info
+    global right_drawer
+
+    right_drawer.hide()
 
     session_info["color_scheme"]["dark_mode"] = not session_info["color_scheme"]["dark_mode"] 
 
@@ -38,17 +49,22 @@ async def set_color_mode():
     return fheader(navtitle="Ansible Automation Hub", session_info=session_info)
 
 @contextmanager
-def frame(_session_info, navtitle: str = "foo", header: bool = False):
+def frame(_client, _session_info, navtitle: str = "foo", header: bool = False):
+    global client
     global session_info
+    client = _client
     session_info = _session_info
+    
     '''Custom page frame to share the same styling and behavior across all pages'''
     try:
         if session_info["color_scheme"]["dark_mode"] == True:
             ui.colors(primary="#BB86FC", secondary="#03DAC5", accent="#03DAC5", warning="#03DAC5", info="#BB68FC")
+            set_color_mode
         elif session_info["color_scheme"]["dark_mode"] == False:
-            pass
+            ui.colors(primary="#FF3300", secondary="#FFFF33", accent="#FFFF33", warning="#FFFF33", info="#FF3300")
+            set_color_mode
     except KeyError as e:
-        print(e)
+        pass
     if header:
         fheader(navtitle, session_info)
     with ui.element("div").classes(" w-full"):
@@ -57,6 +73,7 @@ def frame(_session_info, navtitle: str = "foo", header: bool = False):
 def fheader(navtitle: str, session_info):
     global _header
     global switch
+    global right_drawer
     try:
         if session_info["color_scheme"]["dark_mode"] == True:
             with ui.header().style("background-color: #1d1d1d").classes("items-center justify-between") as _header:
@@ -93,7 +110,7 @@ def fheader(navtitle: str, session_info):
                         with ui.row():
                             ui.switch("Dark Mode", value=False, on_change=set_color_mode).props("outline").style(add="color:#000000").set_visibility("true")
                             ui.button(on_click=lambda: right_drawer.toggle()).props("icon=menu outline")
-            with ui.right_drawer(value=False, fixed=False).style('background-color: #1d1d1d').props('bordered') as right_drawer:
+            with ui.right_drawer(value=False, fixed=False).style('background-color: #FFFFFF').props('bordered') as right_drawer:
                 with ui.expansion("Account", icon="person"):
                     ui.label(" ")
                     ui.button("settings", on_click=lambda: ui.open("/settings")).classes("w-full").props("align=left outline icon=logout")
@@ -107,4 +124,4 @@ def fheader(navtitle: str, session_info):
                         ui.button("log out", on_click=lambda: ui.open("/logout")).classes("w-full").props("align=left outline icon=logout")
         return _header
     except KeyError as e:
-        print(e)
+        pass

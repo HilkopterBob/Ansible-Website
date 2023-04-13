@@ -31,7 +31,7 @@
  - schnittstellenanforderung ausarbeiten für listitem plays
  - formular für ticketsystem einrichten (usability/feadback)
  - Rubriken nach firmen
- - optionaler whitemode (mit Rot und weiß) irgh
+ - whitemode bugt bei seitenübergang
  - login screen aufhübschen mit zb. logo und Ansible automation hub uso
  - formatierung von suchergebnissen 
 

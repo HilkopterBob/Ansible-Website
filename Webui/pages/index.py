@@ -1,4 +1,4 @@
-from nicegui import ui
+from nicegui import ui, Client
 from fastapi import Request
 from fastapi.responses import RedirectResponse
 import itertools
@@ -19,10 +19,27 @@ def add_jobitem(_object):
 
 
 
-async def content(request: Request, session_info) -> None:
+async def content(request: Request, session_info, client: Client) -> None:
     global col_jobitems
     if not await is_authenticated(request, session_info):  
-        return RedirectResponse('/login') 
+        return RedirectResponse('/login')
+    await client.connected()
+
+    if session_info["color_scheme"]["dark_mode"] == False:
+        ui.colors(primary="#FF3300", secondary="#FFFF33", accent="#FFFF33", warning="#FFFF33", info="#FF3300")
+        await ui.run_javascript('''
+            Quasar.Dark.set(false);
+            tailwind.config.darkMode = "class"
+            document.body.classList.remove("dark");
+        ''', respond=False)
+    
+    if session_info["color_scheme"]["dark_mode"] == True:
+        ui.colors(primary="#BB86FC", secondary="#03DAC5", accent="#03DAC5", warning="#03DAC5", info="#BB68FC")
+        await ui.run_javascript('''
+            Quasar.Dark.set(true);
+            tailwind.config.darkMode = "class";
+            document.body.classList.add("dark");
+        ''', respond=False)
 
     # ~~~~~ Main Page ad-hoc commands Card ~~~~~ #
 
